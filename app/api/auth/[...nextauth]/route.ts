@@ -21,12 +21,12 @@ export const authOptions: NextAuthOptions = {
 
         if (!user) return null;
 
-        // Check if the password matches the hashed password
+        // Check hashed match
         const passwordsMatch = await bcrypt.compare(credentials.password, user.password);
         
         if (!passwordsMatch) return null;
 
-        // Return the user object if successful
+        // Return the user if successful
         return { id: user.id, email: user.email, name: user.name };
       }
     })
