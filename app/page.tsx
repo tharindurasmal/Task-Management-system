@@ -16,7 +16,7 @@ export default async function Home() {
         <input 
           type="text" 
           name="title" 
-          placeholder="What do you need to do?" 
+          placeholder="Add a new task..." 
           className="border border-slate-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           required 
         />
