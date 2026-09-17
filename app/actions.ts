@@ -43,3 +43,32 @@ export async function deleteTask(formData: FormData) {
   // refresh page
   revalidatePath("/");
 }
+
+// update task status (completed or todo)
+export async function updateTaskStatus(formData: FormData) {
+  const id = formData.get("id") as string;
+  const status = formData.get("status") as string; // "todo" or "completed"
+  
+  if (!id) return;
+
+  const session = await getServerSession();
+  if (!session?.user?.email) return;
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email }
+  });
+
+  if (!user) return;
+
+  await prisma.task.update({
+    where: { 
+      id: id,
+      userId: user.id 
+    },
+    data: { 
+      completed: status === "completed" 
+    },
+  });
+
+  revalidatePath("/");
+}
